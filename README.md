@@ -33,9 +33,21 @@ Then, after the robot performs initial localization, it travels to the nearest w
 (IMG: MAP WITH 17 WAYPOINTS)
 
 ### Target Detection
+Two different methods will be used to detect the two different targets on the wall.
 #### UA logo: Template Matching
+The UA logo is detected via template matching at multiple scales to ensure that the target is never missed. Then the Canny edge detector is applied, where template matching is performed using edges rather than the raw image to increase the matching accuracy. When the maximum correlation value exceeds the threshold value, it will be deemed a good match. The result shows a good match at 0.7m from the camera. In summary, the 2 main tunable parameters here are the scale of the image, and the threshold value. 
+(VIDEO: UA logo match)
+
 #### AR logo: AR_track_alvar
-#### Face-wall at 90 degrees
+The AR logo is detected via the ar_track_alvar ROS package. Initially, AR logo detection with template matching was tried, but was unsuccessful as the match was unstable. 
+(VIDEO: AR logo match)
+
+#### Face-wall at ~90 degrees
+It is important for the robot to face the wall at ~90 degrees at each waypoint for the robot to detect the target on the wall. Although the waypoints are set with a robot pose that faces the wall, any inaccuracy in the initial localzation step will offset the robot's pose when it arrives to each waypoint. Therefore, a rotate and laser scan motion are combined to find and turn towards the wall. 
+In turtlebot_gazebo, a simulation of the robot's rotate and laser scan motion is performed. The result shows that 13 turns with an angular velocity unit of 0.9 and rospy.Rate(0.5) completes a full rotation in synchronization with the laser scan. 
+(IMG: GAZEBO simulation img)
+
+
 
 ### Docking
 
