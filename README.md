@@ -49,8 +49,7 @@ It is important for the robot to face the wall at ~90 degrees at each waypoint f
 
 In turtlebot_gazebo, a simulation of the robot's rotate and laser scan motion is performed. The result shows that 13 turns with an angular velocity unit of 0.9 and rospy.Rate(0.5) completes a full rotation in synchronization with the laser scan. 
 (IMG: GAZEBO simulation img)
-
-
+(VIDEO: face-wall)
 
 ### Docking
 
