@@ -33,7 +33,7 @@ The same actionlib as the previous project is used. However, instead of 4 waypoi
 Then, after the robot performs initial localization, it travels to the nearest waypoint and starts to loop through the remaining 16 waypoints, while searching for targets on the wall. 
 
 <div align="center">
-  <img src ="img_src/map1.png" width ="600"> <img src ="img_src/map2.png" width ="200"> 
+  <img src ="img_src/map1.png" width ="300">
 </div>
 
 ### Target Detection
@@ -42,14 +42,14 @@ Two different methods will be used to detect the two different targets on the wa
 The UA logo is detected via template matching at multiple scales to ensure that the target is never missed. Then the Canny edge detector is applied, where template matching is performed using edges rather than the raw image to increase the matching accuracy. When the maximum correlation value exceeds the threshold value, it will be deemed a good match. The result shows a good match at 0.7m from the camera. In summary, the 2 main tunable parameters here are the scale of the image, and the threshold value. 
 
 <div align="center">
-  <img src ="img_src/ualogo_match.png" width ="600"> <img src ="img_src/map2.png" width ="200"> 
+  <img src ="img_src/ualogo_match.png" width ="400"> 
 </div>
 
 #### AR logo: AR_track_alvar
 The AR logo is detected via the ar_track_alvar ROS package. Initially, AR logo detection with template matching was tried, but was unsuccessful as the match was unstable. 
 
 <div align="center">
-  <img src ="img_src/arlogo_match.png" width ="600"> <img src ="img_src/map2.png" width ="200"> 
+  <img src ="img_src/arlogo_match.png" width ="400"> 
 </div>
 
 #### Face-wall at 90 degrees
