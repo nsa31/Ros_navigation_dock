@@ -33,7 +33,7 @@ The same actionlib as the previous project is used. However, instead of 4 waypoi
 Then, after the robot performs initial localization, it travels to the nearest waypoint and starts to loop through the remaining 16 waypoints, while searching for targets on the wall. 
 
 <div align="center">
-  <img src ="img_src/map1.png" width ="300">
+  <img src ="img_src/map1.png" width ="200">
 </div>
 
 ### Target Detection
