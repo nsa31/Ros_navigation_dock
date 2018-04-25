@@ -48,15 +48,19 @@ The AR logo is detected via the ar_track_alvar ROS package. Initially, AR logo d
 
 (IMG: AR logo match)
 
-#### Face-wall at ~90 degrees
-It is important for the robot to face the wall at ~90 degrees at each waypoint for the robot to detect the target on the wall. Although the waypoints are set with a robot pose that faces the wall, any inaccuracy in the initial localzation step will offset the robot's pose when it arrives to each waypoint. Therefore, a rotate and laser scan motion are combined to find and turn towards the wall. 
+#### Face-wall at 90 degrees
+It is important for the robot to face the wall at 90 degrees at each waypoint for the robot to properly detect the target on the wall. Although the waypoints are set with a robot pose that faces the wall, any inaccuracy in the initial localzation step will offset the robot's pose when it arrives to each waypoint. Therefore, a rotate and laser scan motion are combined to find and turn towards the wall. 
 
-In turtlebot_gazebo, a simulation of the robot's rotate and laser scan motion is performed and several different methods were tested. The result shows that 13 turns with an angular velocity unit of 1.0 and rospy.Rate(0.5) completes a full rotation in synchronization with the laser scan. However, when tested on the actual kobuki, 19 turns were required to complete a full rotation. The difference in number of turns may be attributed by the differences in odometry. 
+In turtlebot_gazebo, a simulation of the robot's rotate and laser scan motion is performed and several different methods were tested. The result shows that 13 turns with an angular velocity unit of 1.0 and rospy.Rate(0.5) completes a full rotation in synchronization with the laser scan. However, when tested on the actual kobuki, 19 turns were required to complete a full rotation. Then when combining the facewall function with the rest of the code, 25 turns were required to complete a full rotation. The difference in number of turns may be attributed by the differences in odometry. 
 
-(IMG: GAZEBO simulation img)
-(IMG: face-wall)
+(VIDEO: GAZEBO simulation facewall)
 
 ### Docking
+The docking path is calculated based on the robot's pose. Two algorithms are used for two different visual targets, one for the AR Tag and the other for the UA Emblem. For the AR Tag, the ar_track_alvar package from ROS and cv2.projectPoints are used for pose detection. For the UA Emblem, the corner of the drawn match template is used for pose detection. An errx variable is calculated based on the robot's pose as shown below. Based on the errx value, the robot will turn clockwise/anti-clockwise. For example, if the AR Tag is detected, and a errx<-80, the robot will turn 90 degrees anti-clockwise, move slightly forward, then turn 90 degrees clockwise to continue to facewall and read in a new value of errx. The mapping of errx values and its corresponding moving distances for both targets have been done and implemented. After docking, the robot undocks by travelling back to its waypoint position. 
+
+In addition, a simulation of the robot's docking motion is performed. 
+
+(VIDEO: GAZEBO simulation docking)
 
 ### Trial after the competition
 
