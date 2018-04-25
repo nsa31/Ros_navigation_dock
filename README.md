@@ -22,8 +22,6 @@ http://wiki.ros.org/joy/Tutorials/ConfiguringALinuxJoystick
 See previous Project: SLAM-Robot Using ROS-Kobuki Turtlebot for a complete description on how to perform GMapping for map collection.
 In addition, the costmap was modified to prevent the robot from moving outside of the map (i.e.: down the hallway or the washroom areas) when localization fails. 
 
-(IMG: MYMAP_CS10B)
-
 ### Localization
 Unlike the previous project where the robot's initial position could be manually set via the 2D pose estimate in RVIZ, this project requires the robot to search for its initial position. Luckily, the AMCL package includes a global localization rosservice call. This facilitates the dispersion of all particles randomly through the free space in the map, so that AMCL can search for the robot's location on the entire map. 
 
@@ -34,26 +32,34 @@ The same actionlib as the previous project is used. However, instead of 4 waypoi
 
 Then, after the robot performs initial localization, it travels to the nearest waypoint and starts to loop through the remaining 16 waypoints, while searching for targets on the wall. 
 
-(IMG: MAP WITH 17 WAYPOINTS)
+<div align="center">
+  <img src ="img_src/map1.png" width ="600"> <img src ="img_src/map2.png" width ="200"> 
+</div>
 
 ### Target Detection
 Two different methods will be used to detect the two different targets on the wall.
 #### UA logo: Template Matching
 The UA logo is detected via template matching at multiple scales to ensure that the target is never missed. Then the Canny edge detector is applied, where template matching is performed using edges rather than the raw image to increase the matching accuracy. When the maximum correlation value exceeds the threshold value, it will be deemed a good match. The result shows a good match at 0.7m from the camera. In summary, the 2 main tunable parameters here are the scale of the image, and the threshold value. 
 
-(IMG: UA logo match)
+<div align="center">
+  <img src ="img_src/ualogo_match.png" width ="600"> <img src ="img_src/map2.png" width ="200"> 
+</div>
 
 #### AR logo: AR_track_alvar
 The AR logo is detected via the ar_track_alvar ROS package. Initially, AR logo detection with template matching was tried, but was unsuccessful as the match was unstable. 
 
-(IMG: AR logo match)
+<div align="center">
+  <img src ="img_src/arlogo_match.png" width ="600"> <img src ="img_src/map2.png" width ="200"> 
+</div>
 
 #### Face-wall at 90 degrees
 It is important for the robot to face the wall at 90 degrees at each waypoint for the robot to properly detect the target on the wall. Although the waypoints are set with a robot pose that faces the wall, any inaccuracy in the initial localzation step will offset the robot's pose when it arrives to each waypoint. Therefore, a rotate and laser scan motion are combined to find and turn towards the wall. 
 
 In turtlebot_gazebo, a simulation of the robot's rotate and laser scan motion is performed and several different methods were tested. The result shows that 13 turns with an angular velocity unit of 1.0 and rospy.Rate(0.5) completes a full rotation in synchronization with the laser scan. However, when tested on the actual kobuki, 19 turns were required to complete a full rotation. Then when combining the facewall function with the rest of the code, 25 turns were required to complete a full rotation. The difference in number of turns may be attributed by the differences in odometry. 
 
-(VIDEO: GAZEBO simulation facewall)
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=9nhRAdlmAp4"><img src="https://img.youtube.com/vi/9nhRAdlmAp4/0.jpg" alt="IMAGE ALT TEXT"></a>
+</div>
 
 ### Docking
 The docking path is calculated based on the robot's pose. Two algorithms are used for two different visual targets, one for the AR Tag and the other for the UA Emblem. For the AR Tag, the ar_track_alvar package from ROS and cv2.projectPoints are used for pose detection. For the UA Emblem, the corner of the drawn match template is used for pose detection. An errx variable is calculated based on the robot's pose as shown below. Based on the errx value, the robot will turn clockwise/anti-clockwise. For example, if the AR Tag is detected, and a errx<-80, the robot will turn 90 degrees anti-clockwise, move slightly forward, then turn 90 degrees clockwise to continue to facewall and read in a new value of errx. The mapping of errx values and its corresponding moving distances for both targets have been done and implemented. After docking, the robot undocks by travelling back to its waypoint position. 
