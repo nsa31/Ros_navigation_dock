@@ -64,14 +64,14 @@ In turtlebot_gazebo, a simulation of the robot's rotate and laser scan motion is
 ### Docking
 The docking path is calculated based on the robot's pose. Two algorithms are used for two different visual targets, one for the AR Tag and the other for the UA Emblem. For the AR Tag, the ar_track_alvar package from ROS and cv2.projectPoints are used for pose detection. For the UA Emblem, the corner of the drawn match template is used for pose detection. An errx variable is calculated based on the robot's pose as shown below. Based on the errx value, the robot will turn clockwise/anti-clockwise. For example, if the AR Tag is detected, and a errx<-80, the robot will turn 90 degrees anti-clockwise, move slightly forward, then turn 90 degrees clockwise to continue to facewall and read in a new value of errx. The mapping of errx values and its corresponding moving distances for both targets have been done and implemented. After docking, the robot undocks by travelling back to its waypoint position. 
 
-<div align="center">
-  <a href="https://www.youtube.com/watch?v=t7f6R4X7_aU"><img src="https://img.youtube.com/vi/t7f6R4X7_aU/0.jpg" alt="IMAGE ALT TEXT"></a>
-</div>
-
 In turtlebot_gazebo, a simulation of the robot's docking motion using the AR Tag is performed. 
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=t04BtgNpamA"><img src="https://img.youtube.com/vi/t04BtgNpamA/0.jpg" alt="IMAGE ALT TEXT"></a>
+</div>
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=t7f6R4X7_aU"><img src="https://img.youtube.com/vi/t7f6R4X7_aU/0.jpg" alt="IMAGE ALT TEXT"></a>
 </div>
 
 ### Trial after the competition
