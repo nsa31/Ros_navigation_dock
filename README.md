@@ -83,7 +83,7 @@ In turtlebot_gazebo, a simulation of the robot's docking motion using the AR Tag
 ## Authors
 
 * [Nazmus Sakib](https://github.com/nsa31)
-* **Vivian Ting**
+* **Vivian Ting**(https://github.com/jtuoa)
 ## Acknowledgement 
 
 * [Programming Robots with ROS](https://github.com/osrf/rosbook/blob/master)
