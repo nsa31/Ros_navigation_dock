@@ -77,8 +77,10 @@ In turtlebot_gazebo, a simulation of the robot's docking motion using the AR Tag
 ### Trial after the competition
 
 ### Discussion
+It is observed that localization is the most critical step. The localization method implemented here has a success rate of ~50%. Slight localization failures can be corrected with the facewall function. It is also observed that the odometry of kobuki in turtlebot_gazebo simulation and real robot behaves slightly different. Nevertheless, simulation helps to verify the feasibility of algorithms.  
 
 ### Future Work
+Improve the localization method to increase the success rate.
 
 ## Authors
 
